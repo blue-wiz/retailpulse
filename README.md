@@ -2,7 +2,9 @@
 
 A PostgreSQL warehouse, SQL analysis, a customer-value model and a Power BI build package, all on **541,909 transactions** from the UCI *Online Retail* dataset. The data comes from a UK gift-ware retailer selling mostly to wholesalers between December 2010 and December 2011.
 
-![Monthly revenue](reports/figures/monthly_revenue.png)
+![Dashboard overview](reports/figures/dashboard_overview.png)
+
+*Dashboard preview, rendered in Python from the Power BI model tables (`scripts/render_dashboard.py`). The figures match the DAX expected values in the [Power BI build guide](powerbi/POWERBI_BUILD_GUIDE.md).*
 
 ## Key findings
 
@@ -20,6 +22,7 @@ A PostgreSQL warehouse, SQL analysis, a customer-value model and a Power BI buil
 3. **Retention is the growth lever.** In a typical 2011 cohort only about **20%** of new customers buy again the next month. The December 2010 cohort retains far better (36%), because it includes long-standing customers who happened to appear at the start of the data. That is a left-censoring effect, not a better acquisition month.
 4. **Next-quarter spend can be predicted, modestly.** A gradient-boosted model trained on each customer's first 9 months beats the naive "same as last quarter" forecast. Mean absolute error falls from £525 to **£494** per customer, and the 20% of customers it ranks highest account for **68%** of next-quarter revenue.
 
+![Monthly revenue](reports/figures/monthly_revenue.png)
 ![Cohort retention](reports/figures/cohort_retention.png)
 ![RFM segments](reports/figures/rfm_segments.png)
 
@@ -75,6 +78,7 @@ export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/retailpulse   
 python scripts/download_data.py     # downloads + validates 541,909 rows
 python scripts/build_warehouse.py   # loads PostgreSQL, runs the 8 quality checks
 python scripts/run_analysis.py      # figures, CLV model, Power BI exports
+python scripts/render_dashboard.py  # one-page dashboard preview
 pytest -q
 ```
 
