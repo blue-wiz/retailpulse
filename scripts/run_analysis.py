@@ -1,4 +1,4 @@
-"""Step 3: query the warehouse, make figures, fit the CLV model, export Power BI tables."""
+"""Step 3: query the warehouse, make figures, fit the CLV model."""
 import json, sys
 from pathlib import Path
 
@@ -98,11 +98,7 @@ ax.set_ylabel("Mean absolute error per customer (£)")
 ax.set_title("Next-quarter spend prediction (test customers)")
 fig.tight_layout(); fig.savefig(FIG / "clv_model.png", dpi=160); fig.savefig(FIG / "clv_model.svg"); plt.close(fig)
 
-# ---- Exports for Power BI
-pb = ROOT / "powerbi" / "data"; pb.mkdir(parents=True, exist_ok=True)
-for t in ["fact_sales", "dim_customer", "dim_product", "dim_date"]:
-    q(f"SELECT * FROM mart.{t}").to_csv(pb / f"{t}.csv", index=False)
-rfm.to_csv(pb / "rfm.csv", index=False)
+# ---- Result tables
 kpi.to_csv(ROOT / "reports" / "monthly_kpis.csv", index=False)
 seg.round(2).to_csv(ROOT / "reports" / "rfm_segments.csv")
 prod.sort_values("gross_revenue", ascending=False).head(25).to_csv(ROOT / "reports" / "top_products.csv", index=False)
