@@ -1,10 +1,6 @@
 # RetailPulse — customer and revenue analytics for a UK online retailer
 
-A PostgreSQL warehouse, SQL analysis, a customer-value model and a Power BI build package, all on **541,909 transactions** from the UCI *Online Retail* dataset. The data comes from a UK gift-ware retailer selling mostly to wholesalers between December 2010 and December 2011.
-
-![Dashboard overview](reports/figures/dashboard_overview.png)
-
-*Dashboard preview, rendered in Python from the Power BI model tables (`scripts/render_dashboard.py`). The figures match the DAX expected values in the [Power BI build guide](powerbi/POWERBI_BUILD_GUIDE.md).*
+A PostgreSQL warehouse, SQL analysis and a customer-value model, all on **541,909 transactions** from the UCI *Online Retail* dataset. The data comes from a UK gift-ware retailer selling mostly to wholesalers between December 2010 and December 2011.
 
 ## Key findings
 
@@ -37,8 +33,7 @@ UCI CSV ──► raw.online_retail (text, as published)
               ▼
      analysis views: v_monthly_kpis · v_rfm · v_cohort_retention · v_customer_pareto · v_product_performance
               │
-              ├──► Python report + CLV model (scripts/run_analysis.py)
-              └──► Power BI (powerbi/POWERBI_BUILD_GUIDE.md, DAX with expected values)
+              └──► Python report + CLV model (scripts/run_analysis.py)
 ```
 
 ### Cleaning rules
@@ -53,11 +48,10 @@ UCI CSV ──► raw.online_retail (text, as published)
 | Tool | Why |
 |---|---|
 | **PostgreSQL** | A relational warehouse, like those analysts query at work. It provides window functions (`NTILE` for RFM quintiles, `LAG` for month-on-month growth, `FIRST_VALUE` for cohort bases, running `SUM` for the Pareto curve) and foreign keys that enforce the star schema. |
-| **Star schema** | Keeps facts (sales lines) apart from descriptions (customers, products, dates). It is the shape Power BI is designed for and makes every measure a simple aggregation. |
-| **SQL quality checks** | Errors are caught in the warehouse before they reach a dashboard. The build fails loudly if any check returns a non-zero count. |
+| **Star schema** | Keeps facts (sales lines) apart from descriptions (customers, products, dates). It makes every measure a simple aggregation and is the shape BI tools expect. |
+| **SQL quality checks** | Errors are caught in the warehouse before they reach a report. The build fails loudly if any check returns a non-zero count. |
 | **Python (pandas, matplotlib)** | Orchestration, charts and reconciliation tests. The warehouse total is checked against the raw file to within £1. |
 | **scikit-learn** | `HistGradientBoostingRegressor` with absolute-error loss suits skewed spend data, where most customers spend little and a few spend a lot. It is compared against a naive baseline, because a model only counts if it beats the simple rule. |
-| **Power BI + DAX** | The BI tool most UK analyst roles ask for. The guide gives exact expected values so the measures can be verified, not just built. |
 | **pytest** | Tests data validation, leak-free CLV features, warehouse quality, revenue reconciliation and RFM quintile balance. |
 
 ## Run it
@@ -77,8 +71,7 @@ pip install -r requirements.txt
 export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/retailpulse   # Windows: set DATABASE_URL=...
 python scripts/download_data.py     # downloads + validates 541,909 rows
 python scripts/build_warehouse.py   # loads PostgreSQL, runs the 8 quality checks
-python scripts/run_analysis.py      # figures, CLV model, Power BI exports
-python scripts/render_dashboard.py  # one-page dashboard preview
+python scripts/run_analysis.py      # figures and the CLV model
 pytest -q
 ```
 
