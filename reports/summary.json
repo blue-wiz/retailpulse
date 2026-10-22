@@ -1,0 +1,69 @@
+{
+  "rows_raw": 541909,
+  "rows_fact": 536462,
+  "customers": 4320,
+  "orders": 19773,
+  "gross_revenue": 10271433.06,
+  "returns_value": -478724.18,
+  "net_revenue": 9792708.88,
+  "uk_share_pct": 84.8,
+  "guest_share_pct": 15.3,
+  "top20_customers_revenue_pct": 73.67,
+  "dec2010_cohort_m1_retention": 36.5,
+  "median_month1_retention_other_cohorts": 19.55,
+  "peak_month": "2011-11-01",
+  "peak_revenue": 1432734.99,
+  "segments": [
+    {
+      "segment": "New / promising",
+      "customers": 307,
+      "revenue": 122128.7,
+      "pct_customers": 7.1,
+      "pct_revenue": 1.5
+    },
+    {
+      "segment": "Needs attention",
+      "customers": 348,
+      "revenue": 150619.9,
+      "pct_customers": 8.1,
+      "pct_revenue": 1.8
+    },
+    {
+      "segment": "Hibernating",
+      "customers": 1073,
+      "revenue": 419741.3,
+      "pct_customers": 24.8,
+      "pct_revenue": 5.1
+    },
+    {
+      "segment": "At risk",
+      "customers": 655,
+      "revenue": 786052.4,
+      "pct_customers": 15.2,
+      "pct_revenue": 9.5
+    },
+    {
+      "segment": "Loyal",
+      "customers": 945,
+      "revenue": 1194411.2,
+      "pct_customers": 21.9,
+      "pct_revenue": 14.4
+    },
+    {
+      "segment": "Champions",
+      "customers": 992,
+      "revenue": 5617870.3,
+      "pct_customers": 23.0,
+      "pct_revenue": 67.8
+    }
+  ],
+  "clv": {
+    "mae_model": 494.414,
+    "mae_naive_last_90d": 525.225,
+    "mae_zero": 717.62,
+    "n_test_customers": 995,
+    "top20_capture_model": 0.682,
+    "top20_capture_naive": 0.669
+  },
+  "n_clv_customers": 3314
+}
